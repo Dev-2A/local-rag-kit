@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import argparse
 from pathlib import Path
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Literal
 
 import numpy as np
 import re
@@ -45,7 +45,7 @@ class QueryRequest(BaseModel):
     max_chars: int = Field(700, ge=1, le=5000)
     
     # engine mode
-    mode: str = Field("hybrid", description="tfidf | sbert | hybrid")
+    mode: Literal["tfidf", "sbert", "hybrid"] = Field(default="hybrid")
     
     # hybrid params
     rerank_docs_k: int = Field(5, ge=1, le=50)
