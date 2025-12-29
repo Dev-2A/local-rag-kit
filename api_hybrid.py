@@ -291,6 +291,7 @@ def status(config_path: str = "config.yaml"):
                 "doc_count": meta.get("doc_count"),
                 "chunk_count": meta.get("chunk_count"),
                 "data_fingerprint": meta.get("data_fingerprint"),
+                "data_change": meta.get("data_change"),
                 "embedder": meta.get("embedder"),
             }
         
