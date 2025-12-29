@@ -131,6 +131,52 @@ def read_text_file(path: Path) -> str:
     # 최후: 대충 살리기
     return data.encode("utf-8", errors="replace")
 
+def compute_data_fingerprint(data_dir: str, allowed_exts: List[str], deep: bool = False) -> str:
+    """
+    Create a stable fingerprint for a directory.
+    - default(deep=False): relpath + size + mtime_ns (fast, practical)
+    - deep=True: also hashes file content (slower, but more robust)
+    """
+    base = Path(data_dir)
+    if not base.exists():
+        return "missing_data_dir"
+    
+    exts = set(e.lower() for e in allowed_exts or [])
+    h = hashlib.sha1()
+    
+    files = []
+    for p in base.rglob("*"):
+        if not p.is_file():
+            continue
+        if exts and p.suffix.lower() not in exts:
+            continue
+        files.append(p)
+    
+    # stable ordering
+    files.sort(key=lambda x: str(x.relative_to(base)).replace("\\", "/"))
+    
+    for p in files:
+        rel = str(p.relative_to(base)).replace("\\", "/")
+        st = p.stat()
+        h.update(rel.encode("utf-8"))
+        h.update(b"\0")
+        h.update(str(st.st_size).encode("utf-8"))
+        h.update(b"\0")
+        h.update(str(getattr(st, "st_mtime_ns", int(st.st_mtime * 1e9))).encode("utf-8"))
+        h.update(b"\0")
+    
+        if deep:
+            # content hash (streaming)
+            with p.open("rb") as f:
+                while True:
+                    chunk = f.read(1024 * 1024)
+                    if not chunk:
+                        break
+                    h.update(chunk)
+            h.update(b"\0")
+    
+    return h.hexdigest()
+
 
 # -----------------------------
 # Chunking
@@ -332,7 +378,7 @@ def load_meta(index_dir: Path) -> Dict:
     return json.loads((index_dir / "meta.json").read_text(encoding="utf-8"))
 
 
-def compute_data_fingerprint(files: List[Path], data_root: Path) -> str:
+def compute_data_fingerprint_files(files: List[Path], data_root: Path) -> str:
     """
     문서 변경 감지용 fingerprint.
     - 상대경로 + mtime + size 조합을 정렬해 SHA1으로 요약.
@@ -362,7 +408,11 @@ def cmd_index(cfg: AppConfig):
         raise RuntimeError(f"No documents found in {data_root} with {cfg.loader.allowed_exts}")
 
     # --- 문서 변경 감지 fingerprint 생성 ---
-    data_fingerprint = compute_data_fingerprint(files, data_root)
+    allowed_exts = []
+    if hasattr(cfg, "loader") and getattr(cfg.loader, "allowed_exts", None):
+        allowed_exts = list(cfg.loader.allowed_exts)
+    
+    data_fingerprint = compute_data_fingerprint(str(cfg.data_dir), allowed_exts, deep=False)
 
     # --- 기존 인덱스 fingerprint와 비교(상태만 출력) ---
     prev_fp = None

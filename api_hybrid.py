@@ -15,6 +15,7 @@ from ragkit import (
     cmd_index,
     load_meta,
     load_chunks,
+    compute_data_fingerprint,
     TfidfIndex,
     SbertIndex,
 )
@@ -305,6 +306,59 @@ def status(config_path: str = "config.yaml"):
                 "sbert": slim(s_meta),
                 "tfidf": slim(t_meta),
             }
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/check-data")
+def check_data(config_path: str = "config.yaml", deep: bool = False):
+    """
+    Check whether current data_dir differs from indexed fingerprints.
+    This does NOT rebuild indexes. It only reports status.
+    """
+    try:
+        cfg = load_config(config_path)
+        
+        data_dir = getattr(cfg, "data_dir", None)
+        if not data_dir:
+            raise RuntimeError("config has no data_dir")
+        
+        allowed_exts = []
+        if hasattr(cfg, "loader") and getattr(cfg.loader, "allowed_exts", None):
+            allowed_exts = list(cfg.loader.allowed_exts)
+        
+        current_fp = compute_data_fingerprint(data_dir, allowed_exts, deep=deep)
+        
+        def read_index_fp(index_dir: str):
+            idir = Path(index_dir)
+            if not (idir / "meta.json").exists():
+                return {"indexed_fingerprint": None, "changed": None, "status": "missing_index"}
+            meta = load_meta(idir)
+            indexed_fp = meta.get("data_fingerprint")
+            return {
+                "indexed_fingerprint": indexed_fp,
+                "changed": (indexed_fp != current_fp),
+                "status": "ok",
+            }
+        
+        s = read_index_fp("index_sbert")
+        t = read_index_fp("index_tfidf")
+        
+        # overall 판단: 둘 중 하나라도 changed=True면 changed
+        any_missing = (s["status"] != "ok") or (t["status"] != "ok")
+        any_changed = (s.get("changed") is True) or (t.get("changed") is True)
+        
+        overall = "missing_index" if any_missing else ("changed" if any_changed else "unchanged")
+        
+        return {
+            "data_dir": data_dir,
+            "deep": deep,
+            "current_fingerprint": current_fp,
+            "indexes": {
+                "index_sbert": s,
+                "index_tfidf": t,
+            },
+            "overall_change": overall,
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
