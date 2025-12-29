@@ -1,0 +1,54 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyd
+*.so
+*.egg-info/
+dist/
+build/
+
+# --- Virtual env ---
+.venv/
+venv/
+ENV/
+env/
+
+# --- OS / IDE ---
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# --- Logs / temp ---
+*.log
+*.tmp
+
+# --- Secrets ---
+.env
+.env.*
+*.key
+*.pem
+*.p12
+config.local.yaml
+config.local.yml
+
+# --- Generated indexes / outputs ---
+index/
+index_*/
+index_tfidf/
+index_sbert/
+
+# --- Evaluation reports (generated) ---
+report_*.txt
+reports/
+
+# --- Demo JSON outputs (optional generated) ---
+docs/demo_*.json
+
+# --- Model caches (keep local) ---
+.cache/
+**/.huggingface/
+hf_cache/
+
+# --- Jupyter ---
+.ipynb_checkpoints/

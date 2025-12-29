@@ -1,0 +1,3 @@
+{"query":"롤백은 어떻게 해?","gold_doc":"sample1.md"}
+{"query":"릴리즈 노트에 뭐 적어야 해?","gold_doc":"sample2.txt"}
+{"query":"DB 연결 오류 원인 뭐가 있어?","gold_doc":"sample1.md"}

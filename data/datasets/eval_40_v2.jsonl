@@ -1,0 +1,40 @@
+{"query": "장애 나면 제일 먼저 뭐부터 해?", "gold_doc": "incident_runbook.md"}
+{"query": "장애 대응 우선순위가 뭐야?", "gold_doc": "incident_runbook.md"}
+{"query": "장애 때 최근 변경은 어떻게 확인해?", "gold_doc": "incident_runbook.md"}
+{"query": "롤백은 어디서 어떻게 해?", "gold_doc": "incident_runbook.md"}
+{"query": "기능 플래그로 임시 완화하는 내용은 어디 있어?", "gold_doc": "incident_runbook.md"}
+{"query": "에러율이랑 지연시간 확인하라는 런북 문서가 뭐야?", "gold_doc": "incident_runbook.md"}
+{"query": "의존성 장애(DB/Redis) 점검 얘기 나온 문서?", "gold_doc": "incident_runbook.md"}
+{"query": "장애 타임라인 기록과 커뮤니케이션 채널 고정은 어디에 적혀있어?", "gold_doc": "incident_runbook.md"}
+{"query": "릴리즈 노트 템플릿 있어?", "gold_doc": "release_notes.md"}
+{"query": "릴리즈 노트에 변경점은 어디에 써?", "gold_doc": "release_notes.md"}
+{"query": "릴리즈 영향도(impact) 적는 섹션이 뭐야?", "gold_doc": "release_notes.md"}
+{"query": "롤백 절차는 릴리즈 노트 어디에 넣어?", "gold_doc": "release_notes.md"}
+{"query": "배포 후 점검 체크리스트 항목 알려줘", "gold_doc": "release_notes.md"}
+{"query": "API 정상 응답 확인은 어떤 문서에 있어?", "gold_doc": "release_notes.md"}
+{"query": "주요 배치 동작 확인은 릴리즈 문서에 있어?", "gold_doc": "release_notes.md"}
+{"query": "DB 연결 오류가 늘었는데 뭘 점검해야 해?", "gold_doc": "db_troubleshooting.md"}
+{"query": "커넥션 풀 고갈 여부 확인은 어디 문서?", "gold_doc": "db_troubleshooting.md"}
+{"query": "쿼리 지연이 있으면 어떤 원인을 봐야 해?", "gold_doc": "db_troubleshooting.md"}
+{"query": "락 경합/장기 트랜잭션 점검 내용 어디 있어?", "gold_doc": "db_troubleshooting.md"}
+{"query": "느린 쿼리 인덱스 누락 관련 가이드 문서?", "gold_doc": "db_troubleshooting.md"}
+{"query": "커넥션 타임아웃 대응은 어디에 있어?", "gold_doc": "db_troubleshooting.md"}
+{"query": "풀 사이즈 조정 같은 완화 방법 나오는 문서?", "gold_doc": "db_troubleshooting.md"}
+{"query": "배치 시간 조정이 DB 문제 완화에 도움이 된다는 내용 어디야?", "gold_doc": "db_troubleshooting.md"}
+{"query": "401 Unauthorized가 나오는 흔한 이유는?", "gold_doc": "api_auth.md"}
+{"query": "403 Forbidden은 뭐가 문제야?", "gold_doc": "api_auth.md"}
+{"query": "JWT 토큰 만료로 401 나는 내용 어디 있어?", "gold_doc": "api_auth.md"}
+{"query": "Authorization Bearer 토큰 헤더 형식 문서?", "gold_doc": "api_auth.md"}
+{"query": "서버 시간 차이(clock skew)로 인증 문제 난다는 내용 어디야?", "gold_doc": "api_auth.md"}
+{"query": "권한 정책 변경 시 운영 팁 있는 문서?", "gold_doc": "api_auth.md"}
+{"query": "배치는 왜 idempotent하게 만들라고 해?", "gold_doc": "batch_ops.md"}
+{"query": "배치 재시도 정책(지수 백오프) 언급한 문서?", "gold_doc": "batch_ops.md"}
+{"query": "배치 실패하면 어디부터 확인해?", "gold_doc": "batch_ops.md"}
+{"query": "부분 성공/중복 처리 점검 내용 어디있어?", "gold_doc": "batch_ops.md"}
+{"query": "특정 구간만 재처리(리런)하라는 가이드 문서?", "gold_doc": "batch_ops.md"}
+{"query": "cron 스케줄러 체크리스트 있는 문서?", "gold_doc": "batch_ops.md"}
+{"query": "관측의 3대 신호가 뭐야?", "gold_doc": "observability.md"}
+{"query": "알람 폭주 방지(쿨다운/집계) 내용 어디있어?", "gold_doc": "observability.md"}
+{"query": "SLO 기반 알람 우선이라는 문서?", "gold_doc": "observability.md"}
+{"query": "요청 ID를 로그/트레이스에 통일하라는 팁 어디야?", "gold_doc": "observability.md"}
+{"query": "대시보드 설계(개요→의존성→상세) 가이드 문서?", "gold_doc": "observability.md"}

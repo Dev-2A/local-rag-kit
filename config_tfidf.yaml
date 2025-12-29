@@ -1,0 +1,15 @@
+data_dir: "data/docs_v2"
+index_dir: "index_tfidf"
+
+loader:
+  allowed_exts: [".txt", ".md"]
+
+chunk:
+  size: 800         # 문자 기준
+  overlap: 150
+
+retrieval:
+  top_k: 5
+
+embedder:
+  type: "tfidf"
