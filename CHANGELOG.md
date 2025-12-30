@@ -18,3 +18,15 @@ and this project adheres to Semantic Versioning.
 
 ### Fixed
 - Eval argparse bug (`args.dataset`)
+
+## [Unreleased]
+### Added
+- API endpoint `GET /check-data` to detect whether `data_dir` content has changed compared to indexed fingerprints (no auto re-index).
+- One-click Windows script `start_server.cmd` to (re)build missing indexes and start the API server.
+
+### Changed
+- Unified data fingerprint calculation between CLI indexing and API freshness checks.
+
+### Fixed
+- Resolved fingerprint function shadowing caused by duplicate `compute_data_fingerprint` definitions.
+- Fixed CLI indexing fingerprint call to match the updated `compute_data_fingerprint(data_dir, allowed_exts, deep=False)` signature.
